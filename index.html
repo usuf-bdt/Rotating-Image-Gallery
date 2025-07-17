@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rotating Image Gallery</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+    <div class="banner">
+        <div class="center-image">
+            <img src="./assets/images/01.jpg" alt="Center Image">
+        </div>
+        <div class="slider">
+            <div class="item" style="--i: 1" data-title="Image 1"
+                data-description="This is a beautiful landscape image showcasing nature's beauty. This is a beautiful landscape image showcasing nature's beauty. This is a beautiful landscape image showcasing nature's beauty."
+                data-url="https://bdthemes.com/">
+                <img src="./assets/images/01.jpg" alt="">
+            </div>
+            <div class="item" style="--i: 2" data-title="Image 2"
+                data-description="A stunning architectural masterpiece with modern design elements."
+                data-url="https://www.elementpack.pro/">
+                <img src="./assets/images/02.jpg" alt="">
+            </div>
+            <div class="item" style="--i: 3" data-title="Image 3"
+                data-description="Capturing the essence of urban life in a vibrant cityscape."
+                data-url="https://pixelgallery.pro/">
+                <img src="./assets/images/03.jpg" alt="">
+            </div>
+            <div class="item" style="--i: 4" data-title="Image 4"
+                data-description="A serene natural environment perfect for relaxation and peace."
+                data-url="https://bdthemes.com/">
+                <img src="./assets/images/04.jpg" alt="">
+            </div>
+            <div class="item" style="--i: 5" data-title="Image 5"
+                data-description="Exploring the wonders of technology and innovation."
+                data-url="https://www.elementpack.pro/">
+                <img src="./assets/images/05.jpg" alt="">
+            </div>
+            <div class="item" style="--i: 6" data-title="Image 6"
+                data-description="A creative composition that tells a unique visual story."
+                data-url="https://pixelgallery.pro/">
+                <img src="./assets/images/01.jpg" alt="">
+            </div>
+            <div class="item" style="--i: 7" data-title="Image 7"
+                data-description="Celebrating the diversity and beauty of different cultures."
+                data-url="https://bdthemes.com/">
+                <img src="./assets/images/02.jpg" alt="">
+            </div>
+            <div class="item" style="--i: 8" data-title="Image 8"
+                data-description="A moment frozen in time, capturing pure emotion and expression."
+                data-url="https://www.elementpack.pro/">
+                <img src="./assets/images/03.jpg" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-btn" id="closeBtn">&times;</span>
+            <div class="modal-image">
+                <img id="modalImg" src="" alt="">
+            </div>
+            <div class="modal-info">
+                <h2 id="modalTitle"></h2>
+                <p id="modalDescription"></p>
+                <button class="modal-btn" id="modalBtn">Learn More</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+</body>
+
+</html>

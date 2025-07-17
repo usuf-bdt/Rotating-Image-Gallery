@@ -1,0 +1,399 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    font-size: 62.5%;
+    scroll-behavior: smooth;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    min-height: 100vh;
+    overflow: hidden;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+/* 3D Gallery Container */
+.banner {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+.slider {
+    position: relative;
+    width: min(20rem, 100vw);
+    height: min(30rem, 100vw);
+    transform-style: preserve-3d;
+    animation: autoRotate 30s linear infinite;
+}
+
+@keyframes autoRotate {
+    from {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(0deg);
+    }
+
+    to {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(360deg);
+    }
+}
+
+/* Gallery Items */
+.slider .item {
+    position: absolute;
+    inset: 0;
+    cursor: pointer;
+    transform: rotateY(calc(var(--i) * 45deg)) translateZ(40rem);
+    transform-style: preserve-3d;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.slider .item img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 1.5rem;
+    transition: transform 0.5s ease;
+}
+
+.slider .item:hover img {
+    transform: scale(1.1);
+}
+
+.slider:hover {
+    animation-play-state: paused;
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.8);
+    z-index: 1000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    backdrop-filter: blur(0.5rem);
+    padding: 1rem;
+}
+
+.modal.active {
+    display: flex;
+}
+
+.modal-content {
+    background: rgb(255, 255, 255);
+    border-radius: 2rem;
+    padding: clamp(2rem, 5vw, 3rem);
+    max-width: min(60rem, 95vw);
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 2.5rem 6rem rgba(0, 0, 0, 0.3);
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-5rem) scale(0.9);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Close Button */
+.close-btn {
+    position: absolute;
+    top: 0;
+    right: 0.5rem;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: bold;
+    color: #666;
+    cursor: pointer;
+    transition: color 0.3s ease;
+    z-index: 1001;
+    line-height: 1;
+    width: 3.5rem;
+    height: 3.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.close-btn:hover {
+    color: #000;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Modal Content */
+.modal-image {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+.modal-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 1.5rem;
+    object-fit: cover;
+}
+
+.modal-info h2 {
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+    font-size: clamp(1.8rem, 4vw, 2.4rem);
+}
+
+.modal-info p {
+    color: #4a5568;
+    line-height: 1.7;
+    font-size: clamp(1.4rem, 3vw, 1.6rem);
+    margin: 0 0 2.5rem 0;
+}
+
+/* Modal Button */
+.modal-btn {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    padding: clamp(1rem, 2.5vw, 1.2rem) clamp(2rem, 5vw, 3rem);
+    border-radius: 2.5rem;
+    font-size: clamp(1.4rem, 3vw, 1.6rem);
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow:
+        0 8px 25px rgba(102, 126, 234, 0.3),
+        0 0 0 1px rgba(255, 255, 255, 0.1);
+    font-family: inherit;
+    min-width: 12rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.modal-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.5s;
+}
+
+.modal-btn:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: translateY(-3px);
+    box-shadow:
+        0 15px 35px rgba(102, 126, 234, 0.4),
+        0 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.modal-btn:hover::before {
+    left: 100%;
+}
+
+.modal-btn:active {
+    transform: translateY(0);
+}
+
+/* Responsive Design Starts Here */
+
+/* Small laptops and desktops (1024px and below) */
+@media (max-width: 1024px) {
+    .slider {
+        width: min(15rem, 70vw);
+        height: min(25rem, 70vw);
+    }
+
+    .slider .item {
+        transform: rotateY(calc(var(--i) * 45deg)) translateZ(40rem);
+    }
+
+    .modal-content {
+        padding: 3rem;
+        max-width: 70vw;
+        border-radius: 2.5rem;
+    }
+
+    .close-btn {
+        top: 0.5rem;
+        right: 1rem;
+    }
+
+    .modal-image img {
+        max-width: 60rem;
+        border-radius: 2rem;
+    }
+
+    .modal-info h2 {
+        font-size: 2.2rem;
+        margin-bottom: 1.8rem;
+    }
+
+    .modal-info p {
+        font-size: 1.6rem;
+        margin-bottom: 3rem;
+    }
+
+    .modal-btn {
+        padding: 1.3rem 3rem;
+        font-size: 1.6rem;
+        min-width: 13rem;
+    }
+}
+
+/* Tablets (768px and below) */
+@media (max-width: 768px) {
+    .slider {
+        width: min(15rem, 80vw);
+        height: min(20rem, 80vw);
+    }
+
+    .slider .item {
+        transform: rotateY(calc(var(--i) * 45deg)) translateZ(30rem);
+    }
+
+    .modal-content {
+        padding: 3rem;
+        max-width: 70vw;
+        border-radius: 2rem;
+    }
+
+    .close-btn {
+        top: 0;
+        right: 0;
+    }
+
+    .modal-image img {
+        max-width: 100%;
+        border-radius: 1.5rem;
+    }
+
+    .modal-info h2 {
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .modal-info p {
+        font-size: 1.5rem;
+        margin-bottom: 2.5rem;
+    }
+
+    .modal-btn {
+        padding: 1.2rem 2.5rem;
+        font-size: 1.5rem;
+        min-width: 12rem;
+    }
+}
+
+/* Large phones (480px and below) */
+@media (max-width: 480px) {
+    .slider {
+        width: min(12rem, 85vw);
+        height: min(18rem, 85vw);
+    }
+
+    .slider .item {
+        transform: rotateY(calc(var(--i) * 45deg)) translateZ(20rem);
+    }
+
+    .modal-content {
+        padding: 3rem;
+        max-width: 90vw;
+        border-radius: 1.8rem;
+    }
+
+    .close-btn {
+        top: 0.5rem;
+        right: 0.5rem;
+        font-size: clamp(3rem, 3vw, 3rem);
+    }
+
+    .modal-image img {
+        max-width: 100%;
+        border-radius: 1.2rem;
+    }
+
+    .modal-info h2 {
+        font-size: 1.8rem;
+        margin-bottom: 1.2rem;
+    }
+
+    .modal-info p {
+        font-size: 1.4rem;
+        margin-bottom: 2rem;
+    }
+
+    .modal-btn {
+        padding: 1rem 2rem;
+        font-size: 2rem;
+        width: 100%;
+        margin-top: 1rem;
+    }
+}
+
+/* Small phones (320px and below) */
+@media (max-width: 320px) {
+    .slider {
+        width: min(8rem, 70vw);
+        height: min(12rem, 70vw);
+    }
+
+    .slider .item {
+        transform: rotateY(calc(var(--i) * 45deg)) translateZ(13rem);
+    }
+
+    .modal-content {
+        padding: 3rem;
+        max-width: 95vw;
+        border-radius: 1.5rem;
+    }
+
+    .close-btn {
+        top: 0;
+        right: 0;
+        font-size: clamp(2.5rem, 3vw, 2rem);
+    }
+
+    .modal-image img {
+        max-width: 100%;
+        border-radius: 1rem;
+    }
+
+    .modal-info h2 {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+    }
+
+    .modal-info p {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .modal-btn {
+        font-size: 1.5rem;
+    }
+}
