@@ -69,6 +69,28 @@ body {
     height: min(30rem, 100vw);
     transform-style: preserve-3d;
     animation: autoRotate 30s linear infinite;
+    transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+    --custom-rotation: 0deg;
+}
+
+/* Custom rotation class for dynamic angle control */
+.slider.custom-rotation {
+    animation: none;
+    transform: perspective(100rem) rotateX(-15deg) rotateY(var(--custom-rotation));
+    transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Visual feedback for custom angle input */
+.angle-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.angle-input:focus + .angle-btn {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: scale(1.05);
 }
 
 @keyframes autoRotate {
@@ -88,7 +110,9 @@ body {
     cursor: pointer;
     transform: rotateY(calc(var(--i) * 45deg)) translateZ(40rem);
     transform-style: preserve-3d;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: all 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    will-change: transform;
+    cursor: pointer;
 }
 
 .slider .item img {
@@ -98,7 +122,7 @@ body {
     height: 100%;
     object-fit: cover;
     border-radius: 1.5rem;
-    transition: transform 0.5s ease;
+    transition: transform 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94);
 }
 
 .slider .item:hover img {
@@ -107,6 +131,105 @@ body {
 
 .slider:hover {
     animation-play-state: paused;
+}
+
+/* Smooth manual navigation transitions */
+.slider.manual-mode {
+    transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.slider.manual-mode .item {
+    transition: all 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.slider.manual-mode .item img {
+    transition: transform 1.5s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Enhanced smooth transitions for navigation */
+.slider.navigating {
+    transition: transform 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.slider.navigating .item {
+    transition: all 1.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* Modern Rotation Effects */
+.slider.floating {
+    animation: floatingRotate 25s ease-in-out infinite;
+}
+
+@keyframes floatingRotate {
+    0%, 100% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(0deg) translateY(0px) scale(1);
+    }
+    25% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(90deg) translateY(-25px) scale(1.05);
+    }
+    50% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(180deg) translateY(0px) scale(1);
+    }
+    75% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(270deg) translateY(25px) scale(0.95);
+    }
+}
+
+.slider.pulse {
+    animation: pulseRotate 20s ease-in-out infinite;
+}
+
+@keyframes pulseRotate {
+    0%, 100% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(0deg) scale(1);
+    }
+    20% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(72deg) scale(1.15);
+    }
+    40% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(144deg) scale(0.85);
+    }
+    60% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(216deg) scale(1.1);
+    }
+    80% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(288deg) scale(0.9);
+    }
+}
+
+.slider.orbit {
+    animation: orbitRotate 22s ease-in-out infinite;
+}
+
+@keyframes orbitRotate {
+    0% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(0deg) translateZ(0px);
+    }
+    25% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(90deg) translateZ(30px);
+    }
+    50% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(180deg) translateZ(0px);
+    }
+    75% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(270deg) translateZ(-30px);
+    }
+    100% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(360deg) translateZ(0px);
+    }
+}
+
+.slider.spiral {
+    animation: spiralRotate 18s linear infinite;
+}
+
+@keyframes spiralRotate {
+    0% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(0deg) rotateZ(0deg);
+    }
+    100% {
+        transform: perspective(100rem) rotateX(-15deg) rotateY(360deg) rotateZ(360deg);
+    }
 }
 
 /* Modal Styles */
@@ -150,6 +273,8 @@ body {
         transform: translateY(0) scale(1);
     }
 }
+
+
 
 /* Close Button */
 .close-btn {
@@ -247,6 +372,304 @@ body {
 }
 
 .modal-btn:active {
+    transform: translateY(0);
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.quick-btn {
+    flex: 1;
+    min-width: 80px;
+    padding: 0.6rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.8rem;
+    background: white;
+    color: #4a5568;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.quick-btn:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+    transform: translateY(-1px);
+}
+
+.quick-btn:active {
+    transform: translateY(0);
+}
+
+/* Gallery Info */
+.gallery-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.8rem 1rem;
+    background: rgba(102, 126, 234, 0.05);
+    border-radius: 0.8rem;
+    border: 1px solid rgba(102, 126, 234, 0.1);
+}
+
+.gallery-info span {
+    color: #4a5568;
+    font-size: 1.1rem;
+    font-weight: 500;
+}
+
+/* Rotation Control Panel */
+.rotation-controls {
+    position: fixed;
+    top: 2rem;
+    right: 2rem;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(1rem);
+    border-radius: 1.5rem;
+    padding: 2rem;
+    box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    min-width: 25rem;
+    transition: all 0.3s ease;
+}
+
+.rotation-controls:hover {
+    background: rgba(255, 255, 255, 0.98);
+    transform: translateY(-2px);
+    box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.25);
+}
+
+.control-panel h3 {
+    color: #2d3748;
+    margin-bottom: 1.5rem;
+    font-size: 1.6rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+.control-group {
+    margin-bottom: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.control-group label {
+    color: #4a5568;
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin-bottom: 0.3rem;
+}
+
+/* Speed Slider */
+.slider-control {
+    width: 100%;
+    height: 0.6rem;
+    border-radius: 0.3rem;
+    background: #e2e8f0;
+    outline: none;
+    -webkit-appearance: none;
+    appearance: none;
+    cursor: pointer;
+}
+
+.slider-control::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    cursor: pointer;
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.slider-control::-webkit-slider-thumb:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0.3rem 0.8rem rgba(0, 0, 0, 0.3);
+}
+
+.slider-control::-moz-range-thumb {
+    width: 1.8rem;
+    height: 1.8rem;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
+}
+
+#speedValue {
+    color: #667eea;
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-align: center;
+}
+
+/* Style Select */
+.style-select {
+    padding: 0.8rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.8rem;
+    background: white;
+    color: #4a5568;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.style-select:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+/* Direction Buttons */
+.direction-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.direction-btn {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.8rem;
+    background: white;
+    color: #4a5568;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.direction-btn:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+}
+
+.direction-btn.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border-color: #667eea;
+}
+
+/* Play/Pause Button */
+.play-pause-btn {
+    width: 100%;
+    padding: 1rem 1.5rem;
+    border: none;
+    border-radius: 0.8rem;
+    background: linear-gradient(135deg, #48bb78 0%, #38a169 100%);
+    color: white;
+    font-size: 1.2rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0.2rem 0.5rem rgba(72, 187, 120, 0.3);
+}
+
+.play-pause-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0.4rem 1rem rgba(72, 187, 120, 0.4);
+}
+
+.play-pause-btn.paused {
+    background: linear-gradient(135deg, #ed8936 0%, #dd6b20 100%);
+    box-shadow: 0 0.2rem 0.5rem rgba(237, 137, 54, 0.3);
+}
+
+.play-pause-btn.paused:hover {
+    box-shadow: 0 0.4rem 1rem rgba(237, 137, 54, 0.4);
+}
+
+
+
+/* Navigation Buttons */
+.nav-btn {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.8rem;
+    background: white;
+    color: #4a5568;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.nav-btn:hover {
+    border-color: #667eea;
+    background: rgba(102, 126, 234, 0.05);
+    transform: translateY(-1px);
+}
+
+.nav-btn:active {
+    transform: translateY(0);
+}
+
+/* Active item highlighting */
+.slider .item.active img {
+    transform: scale(1.05);
+}
+
+/* Navigation button click effect */
+.nav-btn.clicked {
+    transform: scale(0.95);
+    background: rgba(102, 126, 234, 0.1);
+}
+
+/* Custom Angle Controls */
+.angle-controls {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.angle-input {
+    flex: 1;
+    padding: 0.8rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 0.8rem;
+    background: white;
+    color: #4a5568;
+    font-size: 1.2rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+.angle-input:focus {
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.angle-btn {
+    padding: 0.8rem 1.5rem;
+    border: 2px solid #667eea;
+    border-radius: 0.8rem;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    outline: none;
+}
+
+.angle-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+}
+
+.angle-btn:active {
     transform: translateY(0);
 }
 
@@ -426,5 +849,53 @@ body {
 
     .modal-btn {
         font-size: 1.5rem;
+    }
+    
+    /* Control panel responsive */
+    .rotation-controls {
+        position: fixed;
+        top: 1rem;
+        right: 1rem;
+        left: 1rem;
+        min-width: auto;
+        padding: 1.5rem;
+        border-radius: 1rem;
+    }
+    
+    .control-panel h3 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+    
+    .control-group {
+        margin-bottom: 1rem;
+    }
+    
+    .control-group label {
+        font-size: 1.1rem;
+    }
+    
+    .direction-buttons {
+        flex-direction: column;
+        gap: 0.3rem;
+    }
+    
+    .nav-btn {
+        font-size: 1rem;
+        padding: 0.6rem 0.8rem;
+    }
+    
+    .quick-actions {
+        flex-direction: column;
+    }
+    
+    .quick-btn {
+        min-width: auto;
+    }
+    
+    .gallery-info {
+        flex-direction: column;
+        gap: 0.5rem;
+        text-align: center;
     }
 }
